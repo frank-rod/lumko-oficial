@@ -1,7 +1,6 @@
 /* LUMKO Studio — interactions
  * - sticky nav scroll state
- * - paquetes responsive scroll-snap with right rail sync
- * - lotties: static thumbnails by default, plays the active main lottie
+ * - paquetes responsive cards with active lottie sync
  * - portafolio horizontal scroller with prev/next + drag
  * - footer year
  */
@@ -25,7 +24,6 @@
 
   /* ---------- lotties ----------
    * Wait for lottie-web (lottie_light) to load, then mount each [data-lottie].
-   * Rail thumbnails: rendered at frame 0 (static).
    * Main card lotties: play when their card is the current one.
    */
   function mountLotties() {
@@ -43,13 +41,7 @@
           path,
         });
         anim.addEventListener('DOMLoaded', () => {
-          if (!isMain) {
-            // freeze rail thumbnails on a representative frame
-            const total = anim.totalFrames || 60;
-            anim.goToAndStop(Math.floor(total * 0.3), true);
-          } else {
-            anim.goToAndStop(0, true);
-          }
+          anim.goToAndStop(0, true);
         });
         el._lottie = anim;
         el.dataset.lottieMounted = '1';
@@ -67,11 +59,9 @@
   }
   whenLottieReady(mountLotties);
 
-  /* ---------- paquetes carousel ---------- */
-  const stage = document.querySelector('[data-paquetes]');
+  /* ---------- paquetes cards ---------- */
   const track = document.querySelector('[data-track]');
   const cards = Array.from(document.querySelectorAll('.card[data-card]'));
-  const railItems = Array.from(document.querySelectorAll('.rail__item'));
 
   let currentIdx = -1;
 
@@ -80,7 +70,6 @@
     currentIdx = idx;
 
     cards.forEach((c, i) => c.classList.toggle('is-current', i === idx));
-    railItems.forEach((r, i) => r.classList.toggle('is-active', i === idx));
 
     // play current card's main lottie, freeze the others
     cards.forEach((c, i) => {
@@ -94,8 +83,8 @@
     });
   }
 
-  // Scroll-snap-aware "current card" detection.
-  // We pick the card whose center is closest to the visible track center.
+  // On mobile the package cards are a horizontal scroll-snap track.
+  // Pick the card whose center is closest to the visible track center.
   function pickCurrent() {
     if (!track || cards.length === 0) return;
     const cs = window.getComputedStyle(track);
@@ -127,8 +116,8 @@
     setTimeout(pickCurrent, 400);
   }
 
-  // fallback: if cards are stacked with no track overflow, use viewport visibility.
-  // Use a window IntersectionObserver to mark the most visible card.
+  // On desktop, cards sit in a compact grid. Use viewport visibility to keep
+  // the highlighted state and lottie playback stable while crossing sections.
   if ('IntersectionObserver' in window) {
     const isStackedLayout = () => {
       if (!track) return false;
@@ -151,33 +140,6 @@
     );
     cards.forEach(c => io.observe(c));
   }
-
-  // rail click → snap to card
-  railItems.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const idx = Number(btn.dataset.rail || 0);
-      const target = cards[idx];
-      if (!target || !track) return;
-      if (track.scrollWidth > track.clientWidth + 4) {
-        const trackLeft = track.getBoundingClientRect().left;
-        const cardLeft = target.getBoundingClientRect().left;
-        track.scrollBy({
-          left: cardLeft - trackLeft - (track.clientWidth - target.clientWidth) / 2,
-          behavior: 'smooth',
-        });
-      } else if (track.scrollHeight > track.clientHeight + 4) {
-        const trackTop = track.getBoundingClientRect().top;
-        const cardTop = target.getBoundingClientRect().top;
-        track.scrollBy({
-          top: cardTop - trackTop - (track.clientHeight - target.clientHeight) / 2,
-          behavior: 'smooth',
-        });
-      } else {
-        target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }
-      setActive(idx);
-    });
-  });
 
   /* ---------- portafolio scroller ---------- */
   const port = document.querySelector('[data-port]');
