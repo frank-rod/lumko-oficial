@@ -136,8 +136,15 @@ p { margin: 0; }
   transition: background var(--t), border-color var(--t);
 }
 .nav.is-scrolled { background: rgba(250, 246, 239, 0.92); border-bottom-color: rgba(51,89,108,0.10); }
-.nav__brand { display: inline-flex; align-items: center; flex-shrink: 0; }
-.nav__brand img { width: auto; height: 34px; }
+.nav__brand { display: inline-flex; align-items: center; flex: 0 0 auto; }
+.nav__brand img {
+  display: block;
+  width: 162px;
+  height: auto;
+  aspect-ratio: 966 / 202;
+  object-fit: contain;
+  max-width: none;
+}
 
 .nav__links { display: flex; gap: 28px; }
 .nav__links a {
