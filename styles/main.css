@@ -136,10 +136,8 @@ p { margin: 0; }
   transition: background var(--t), border-color var(--t);
 }
 .nav.is-scrolled { background: rgba(250, 246, 239, 0.92); border-bottom-color: rgba(51,89,108,0.10); }
-.nav__brand { display: inline-flex; align-items: center; gap: 12px; font-family: "Montserrat", sans-serif; font-weight: 800; font-size: 17px; color: var(--teal-900); letter-spacing: -0.01em; }
-.nav__brand img { width: 30px; height: 30px; }
-.nav__brand em { font-style: normal; font-weight: 500; color: var(--teal-700); }
-.nav__brand-dot { color: var(--mint-500); }
+.nav__brand { display: inline-flex; align-items: center; flex-shrink: 0; }
+.nav__brand img { width: auto; height: 34px; }
 
 .nav__links { display: flex; gap: 28px; }
 .nav__links a {
