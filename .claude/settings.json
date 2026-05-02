@@ -1,0 +1,40 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 -c \"import sys; print\\(sys.version\\)\")",
+      "Bash(python3 -c \"import pypdf\")",
+      "Bash(pip3 install *)",
+      "Bash(python3 -c ' *)",
+      "Bash(python3 -c \"import pypdf; print\\(pypdf.__version__\\)\")",
+      "Bash(/opt/homebrew/opt/python@3.11/bin/python3.11 -c ' *)",
+      "Bash(mv isotipo.PNG assets/brand/isotipo.png)",
+      "Bash(mv logocompleto.PNG assets/brand/logo.png)",
+      "Bash(mv \"ICONOS DE SELLOS PNG\"/*.png assets/sellos/)",
+      "Bash(rmdir \"ICONOS DE SELLOS PNG\")",
+      "Bash(mv lottie/*.json assets/lottie/)",
+      "Bash(mv \"BRANDING BASICO.png\" branding-basico.png)",
+      "Bash(mv \"CALIDAD PREMIUM.png\" calidad-premium.png)",
+      "Bash(mv \"COBERTURA TOTAL.png\" cobertura-total.png)",
+      "Bash(mv \"GARANTIA 3 DIAS.png\" garantia-3-dias.png)",
+      "Bash(mv \"HOSTING INCLUIDO.png\" hosting-incluido.png)",
+      "Bash(mkdir -p _personal)",
+      "Bash(mv frank.jpg santiago.jpg fjrod.png linkedin.png _personal/)",
+      "Bash(mkdir -p _other)",
+      "Bash(mv paquetesweb.png prueba.png pruebaportafolio.jpg nuevaportafolio.png _other/)",
+      "Bash(python3 tools/generate_images.py)",
+      "Read(//tmp/lumko-shots/**)",
+      "Read(//private/tmp/lumko-shots/**)",
+      "Bash('/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' --headless=new --disable-gpu --hide-scrollbars --window-size=1440,900 --no-sandbox --virtual-time-budget=10000 --dump-dom 'http://127.0.0.1:8765/_capture.html?y=900')",
+      "Bash('/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' --headless=new --disable-gpu --hide-scrollbars --window-size=1440,900 --no-sandbox --virtual-time-budget=10000 --dump-dom http://127.0.0.1:8765/_capture.html)",
+      "Bash('/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' --headless=new --disable-gpu --hide-scrollbars --window-size=1440,900 --no-sandbox --virtual-time-budget=15000 --dump-dom 'http://127.0.0.1:8765/_capture.html?y=900')",
+      "Bash(rm -f _capture.html .DS_Store)",
+      "Bash(rm -f assets/clients/_personal/.DS_Store assets/clients/_other/.DS_Store)",
+      "Bash(kill %1 %2)",
+      "Bash(pkill -f \"http.server 8765\")",
+      "Bash(pkill -f \"http.server 8766\")",
+      "Bash(rm -f _capture.html)",
+      "Bash(pkill -f \"http.server 8767\")",
+      "Bash(python3 -m py_compile tools/generate_images.py)"
+    ]
+  }
+}
